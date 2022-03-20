@@ -5,6 +5,7 @@ import com.example.io_backend.model.enums.*;
 import com.example.io_backend.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.dynamic.scaffold.MethodRegistry;
 import org.apache.tomcat.util.http.parser.Host;
 import org.apache.tomcat.util.http.parser.MediaTypeCache;
 import org.hibernate.query.criteria.internal.expression.function.AggregationFunction;
@@ -15,8 +16,10 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolationException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -30,6 +33,13 @@ public class DatabaseSeeder implements ApplicationRunner {
     private final ReviewRepository reviewRepository;
     private final EquipmentRepository equipmentRepository;
     private final FacilityRepository facilityRepository;
+    private final ReportSurveyRepository reportSurveyRepository;
+    private final AccidentReportRepository accidentReportRepository;
+    private final AdditionalServicesRepository additionalServicesRepository;
+    private final DispositorDutyEntryRepository dispositorDutyEntryRepository;
+    private final AmbulanceAvailabilityRepository ambulanceAvailabilityRepository;
+    private final EquipmentLogRepository equipmentLogRepository;
+    private final LocationRepository locationRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -46,7 +56,13 @@ public class DatabaseSeeder implements ApplicationRunner {
        reviewRepository.saveAll(generateReviews(entitiesToGenerate));
        equipmentRepository.saveAll(generateEquipment(entitiesToGenerate));
        facilityRepository.saveAll(generateFacilities(entitiesToGenerate));
-
+       reportSurveyRepository.saveAll(generateSurveys(entitiesToGenerate));
+       accidentReportRepository.saveAll(generateReports(entitiesToGenerate));
+       additionalServicesRepository.saveAll(generateAdditionalServices(entitiesToGenerate));
+       dispositorDutyEntryRepository.saveAll(generateDispositorDuties(entitiesToGenerate));
+       ambulanceAvailabilityRepository.saveAll(generateAmbulanceAvailability(entitiesToGenerate));
+       locationRepository.saveAll(generateLocations(entitiesToGenerate));
+       equipmentLogRepository.saveAll(generateEquipmentLog(entitiesToGenerate));
     }
 
     private List<MedicalInfo> generateMedicalInfos(int length) {
@@ -214,6 +230,142 @@ public class DatabaseSeeder implements ApplicationRunner {
         }
 
         return facilities;
+    }
+
+    private List<ReportSurvey> generateSurveys(int length) {
+        List<ReportSurvey> reportSurveys = new ArrayList<>();
+
+        for (int i = 0; i < length; i++) {
+            ReportSurvey rp = new ReportSurvey();
+            rp.setBloodType(EnumUtils.randomValue(BloodType.class));
+            rp.setId(null);
+            rp.setDate(new Date());
+            rp.setDescription("Lorem ipsum");
+            rp.setVictimBreathing(ThreadLocalRandom.current().nextBoolean());
+            rp.setVictimConscious(ThreadLocalRandom.current().nextBoolean());
+            rp.setFileUrl(List.of("/var/surveys/survey"+i+".csv"));
+
+            reportSurveys.add(rp);
+        }
+
+        return reportSurveys;
+    }
+
+    private List<AccidentReport> generateReports(int length) {
+        List<AccidentReport> accidentReports = new ArrayList<>();
+        List<Ambulance> ambulances = ambulanceRepository.findAll();
+        List<ReportSurvey> reportSurveys = reportSurveyRepository.findAll();
+        List<Staff> staffList = staffRepository.findAll();
+        List<User> users = userRepository.findAll();
+
+        for (int i = 0; i < length; i++) {
+            AccidentReport a = new AccidentReport();
+            a.setId(null);
+            a.setAmbulances(
+                    ambulances.stream()
+                            .limit(ThreadLocalRandom.current().nextInt(ambulances.size() - (entitiesToGenerate / 2)))
+                            .collect(Collectors.toSet()));
+            a.setDate(new Date());
+            a.setClosed(ThreadLocalRandom.current().nextBoolean());
+            a.setReportSurvey(reportSurveys.get(ThreadLocalRandom.current().nextInt(reportSurveys.size())));
+            a.setStaff(staffList.get(ThreadLocalRandom.current().nextInt(staffList.size())));
+            a.setDangerRating((short) ThreadLocalRandom.current().nextInt(128));
+            a.setUser(users.get(ThreadLocalRandom.current().nextInt(users.size())));
+
+            accidentReports.add(a);
+        }
+
+        return accidentReports;
+    }
+
+    private List<AdditionalServices> generateAdditionalServices(int length) {
+        List<AdditionalServices> additionalServices = new ArrayList<>();
+
+        for (int i = 0; i < length; i++) {
+            AdditionalServices as = new AdditionalServices();
+            as.setId(null);
+            as.setAdditionalServicesType(EnumUtils.randomValue(AdditionalServicesType.class));
+            as.setJustification("lorem ipsum");
+            as.setDate(new Date());
+
+            additionalServices.add(as);
+        }
+
+        return additionalServices;
+    }
+
+    private List<AmbulanceAvailability> generateAmbulanceAvailability(int length) {
+        List<AmbulanceAvailability> ambulanceAvailabilityList = new ArrayList<>();
+        List<Ambulance> ambulances = ambulanceRepository.findAll();
+
+        for (int i = 0; i < length; i++) {
+            AmbulanceAvailability ambulanceAvailability = new AmbulanceAvailability();
+            ambulanceAvailability.setAmbulance(ambulances.get(ThreadLocalRandom.current().nextInt(ambulances.size())));
+            ambulanceAvailability.setId(null);
+            ambulanceAvailability.setAvailabilityType(EnumUtils.randomValue(AvailabilityType.class));
+            ambulanceAvailability.setDetails("lorem ipsum " + i);
+            ambulanceAvailability.setDateStart(new Date());
+            ambulanceAvailability.setDateEnd(new Date());
+
+            ambulanceAvailabilityList.add(ambulanceAvailability);
+        }
+
+        return ambulanceAvailabilityList;
+    }
+
+    private List<DispositorDutyEntry> generateDispositorDuties(int length) {
+        List<DispositorDutyEntry> dispositorDutyEntries = new ArrayList<>();
+        List<Staff> staff = staffRepository.findAll();
+
+        for (int i = 0; i < length; i++) {
+            DispositorDutyEntry d = new DispositorDutyEntry();
+            d.setId(null);
+            d.setDutyStart(Instant.now().getEpochSecond());
+            d.setDutyEnd(Instant.now().getEpochSecond() + (60 * 60 * 8));
+            d.setComment("comment " + i);
+            d.setStaff(staff.get(ThreadLocalRandom.current().nextInt(staff.size())));
+
+            dispositorDutyEntries.add(d);
+        }
+
+        return dispositorDutyEntries;
+    }
+
+    private List<Location> generateLocations(int length) {
+        List<Location> locations = new ArrayList<>();
+
+        for (int i = 0; i < length; i++) {
+            Location location = new Location();
+            location.setId(null);
+            location.setLatitude(ThreadLocalRandom.current().nextDouble(-90, 90));
+            location.setLatitude(ThreadLocalRandom.current().nextDouble(-180, 180));
+
+            locations.add(location);
+        }
+
+        return locations;
+    }
+
+    private List<EquipmentLog> generateEquipmentLog(int length) {
+        List<EquipmentLog> equipmentLogs = new ArrayList<>();
+        List<Ambulance> ambulances = ambulanceRepository.findAll();
+        List<Equipment> equipmentList = equipmentRepository.findAll();
+
+        for (int i = 0; i < length; i++) {
+            Double staring = ThreadLocalRandom.current().nextDouble(1,51);
+            EquipmentLog e = new EquipmentLog();
+            e.setId(null);
+            e.setDateStart(new Date());
+            e.setDateEnd(new Date());
+            e.setStartingAmount(staring);
+            e.setCurrentAmount(staring - ThreadLocalRandom.current().nextDouble(0, 51));
+            e.setAmbulance(ambulances.get(ThreadLocalRandom.current().nextInt(ambulances.size())));
+            e.setEquipment(equipmentList.get(ThreadLocalRandom.current().nextInt(equipmentList.size())));
+
+            equipmentLogs.add(e);
+        }
+
+        return equipmentLogs;
     }
 
     private final List<String> chronicDiseases = List.of(

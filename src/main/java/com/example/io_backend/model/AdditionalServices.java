@@ -14,6 +14,7 @@ import java.util.Date;
 public class AdditionalServices {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue
     private Long id;
 
     @Enumerated
