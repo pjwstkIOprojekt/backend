@@ -107,22 +107,13 @@ public class DatabaseSeeder implements ApplicationRunner {
     private List<Staff> generateStaff(int length) {
         List<Staff> staffList = new ArrayList<>();
 
-        boolean ok = false;
-
         for (int i = 0; i < length; i++) {
             Staff staff = new Staff();
             staff.setId(null);
             staff.setStaffType(EnumUtils.randomValue(StaffType.class));
             staff.setFirstName(names.get(ThreadLocalRandom.current().nextInt(names.size())).split(" ")[0]);
             staff.setLastName(names.get(ThreadLocalRandom.current().nextInt(names.size())).split(" ")[1]);
-
-            while (!ok) {
-                try {
-                    staff.setMail(emails.get(ThreadLocalRandom.current().nextInt(emails.size())));
-                    ok = true;
-                } catch (ConstraintViolationException ignored) {}
-            }
-
+            staff.setMail(emails.get(ThreadLocalRandom.current().nextInt(emails.size())));
             staff.setSalt("salt");
             staff.setPasswordHash(passwordEncoder.encode("passwordsalt"));
 
@@ -338,7 +329,7 @@ public class DatabaseSeeder implements ApplicationRunner {
             Location location = new Location();
             location.setId(null);
             location.setLatitude(ThreadLocalRandom.current().nextDouble(-90, 90));
-            location.setLatitude(ThreadLocalRandom.current().nextDouble(-180, 180));
+            location.setLongitude(ThreadLocalRandom.current().nextDouble(-180, 180));
 
             locations.add(location);
         }
