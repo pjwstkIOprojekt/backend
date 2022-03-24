@@ -2,12 +2,12 @@ package com.example.io_backend.service;
 
 import com.example.io_backend.exception.NotFoundException;
 import com.example.io_backend.model.Tutorial;
-import com.example.io_backend.model.User;
 import com.example.io_backend.repository.TutorialRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 @RequiredArgsConstructor
 public class TutorialService {
 

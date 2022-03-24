@@ -1,9 +1,6 @@
 package com.example.io_backend.controller;
-import com.example.io_backend.exception.NotFoundException;
-import com.example.io_backend.model.Person;
+
 import com.example.io_backend.model.User;
-import com.example.io_backend.repository.PersonRepository;
-import com.example.io_backend.repository.UserRepository;
 import com.example.io_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
