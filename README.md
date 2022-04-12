@@ -14,21 +14,20 @@
 8. Jeśli praca nad daną funkcją jest skończona to należy zrobić pull request (wejdź na URL _oryginalnego_ repozytorium i przejdź do zakładki pull requests, w UI jest wszystko opisane)
 9. _Ktoś_ zaakceptuje i zmerguje te zmiany _kiedyś_
 
+
 ### Uruchamianie 
 #### Uruchamianie lokalne
 - **Docker** *(są dwa sposoby)*:
 
-1. Sklonuj to repozytorium
-2. Wykonaj `./gradlew bootJar && docker-compose -f docker-compose.devBuild.yml up --build`
-3. Aplikacja powinna być dostępna pod portem `8080`, dodatkowo włączony jest agent debugowania na porcie `5005`
-4. Jeśli chcesz podłączyć debugger to musisz teraz w intellij skonfigurować "remote debugging"
-   1. O tym w sekcji [Debugowanie](#debugowanie)
 
+#### W intellij:
 
-Drugi sposób, czyli zbudowanie w kompletnie czystym środowisku:
+Na prawym panelu jest zakładka "Gradle", Tasks -> application -> run
 
-1. Sklonuj to repozytorium
-2. Będąc w głównym katalogu tego repozytorium wykonaj: `docker-compose -f docker-compose.cleanBuild.yml up --build`
+#### W terminalu:
+
+`./gradlew run`
+
 
 - **Local z Keycloakiem**   
 #### Ustawienie środowiska
@@ -68,3 +67,15 @@ Drugi sposób, czyli zbudowanie w kompletnie czystym środowisku:
   
 Teraz powinien działać backend wraz ze skonfigurowanym Keycloakiem
 ### Debugowanie
+=======
+---
+#### Testowanie:
+
+#### W intellij:
+
+Na prawym panelu jest zakładka "Gradle", Tasks -> verification -> run
+
+#### W terminalu:
+
+`./gradlew test`
+
