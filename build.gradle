@@ -52,6 +52,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "org.springframework.boot:spring-boot-starter-validation"
 	implementation group: 'org.hsqldb', name: 'hsqldb', version: '2.6.1'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
 
@@ -68,6 +69,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '1.1.0'
+
 }
 
 test {

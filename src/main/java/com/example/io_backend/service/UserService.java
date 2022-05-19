@@ -6,6 +6,7 @@ import com.example.io_backend.model.MedicalInfo;
 import com.example.io_backend.model.User;
 import com.example.io_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final MedicalInfoService medicalInfoService;
+
+    private final ModelMapper modelMapper;
+
 
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -53,13 +57,17 @@ public class UserService {
             User user = this.getUserById(userId);
             medicalInfoService.addMedicalInfo(medicalInfo);
             user.setMedicalInfo(medicalInfo);
-            return null;
+
+        return modelMapper.map(user,UserMedicalInfoDto.class);
+
     }
 
     public UserMedicalInfoDto updateUserMedicalInfo(String userId, MedicalInfo medicalInfo ) {
         User user = this.getUserById(userId);
         medicalInfoService.updateMedicalInfo(medicalInfo,user.getMedicalInfo().getId());
-        return null;
+
+        return modelMapper.map(user,UserMedicalInfoDto.class);
+
     }
 
 
