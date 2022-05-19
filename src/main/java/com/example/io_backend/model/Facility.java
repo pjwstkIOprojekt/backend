@@ -36,4 +36,8 @@ public class Facility {
     @Column(name = "maximum_beds")
     private Integer maximumBeds;
 
+    @JoinColumn(name = "location")
+    @OneToOne(orphanRemoval = true)
+    private Location location;
+
 }

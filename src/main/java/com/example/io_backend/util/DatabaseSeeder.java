@@ -147,16 +147,31 @@ public class DatabaseSeeder implements ApplicationRunner {
         tutorialRepository.saveAll(generateTutorials(entitiesToGenerate));
         reviewRepository.saveAll(generateReviews(entitiesToGenerate));
         equipmentRepository.saveAll(generateEquipment(entitiesToGenerate));
+        locationRepository.saveAll(generateLocations(entitiesToGenerate));
         facilityRepository.saveAll(generateFacilities(entitiesToGenerate));
         reportSurveyRepository.saveAll(generateSurveys(entitiesToGenerate));
         accidentReportRepository.saveAll(generateReports(entitiesToGenerate));
         additionalServicesRepository.saveAll(generateAdditionalServices(entitiesToGenerate));
         dispositorDutyEntryRepository.saveAll(generateDispositorDuties(entitiesToGenerate));
         ambulanceAvailabilityRepository.saveAll(generateAmbulanceAvailability(entitiesToGenerate));
-        locationRepository.saveAll(generateLocations(entitiesToGenerate));
         equipmentLogRepository.saveAll(generateEquipmentLog(entitiesToGenerate));
 
         log.info("Database seeding finished");
+    }
+
+    private List<Location> generateLocations(int length) {
+        List<Location> locations = new ArrayList<>();
+
+        for (int i = 0; i < length; i++) {
+            Location location = new Location();
+            location.setId(null);
+            location.setLatitude(ThreadLocalRandom.current().nextDouble(-90, 90));
+            location.setLongitude(ThreadLocalRandom.current().nextDouble(-180, 180));
+
+            locations.add(location);
+        }
+
+        return locations;
     }
 
     private List<MedicalInfo> generateMedicalInfos(int length) {
@@ -295,6 +310,7 @@ public class DatabaseSeeder implements ApplicationRunner {
 
     private List<Facility> generateFacilities(int length) {
         List<Facility> facilities = new ArrayList<>();
+        List<Location> locations = locationRepository.findAll();
 
         for (int i = 0; i < length; i++) {
             Facility f = new Facility();
@@ -304,7 +320,7 @@ public class DatabaseSeeder implements ApplicationRunner {
             f.setHospitalType(EnumUtils.randomValue(HospitalType.class));
             f.setMaximumBeds(ThreadLocalRandom.current().nextInt(10, 101));
             f.setSet(null); // ???
-
+            f.setLocation(locations.get(ThreadLocalRandom.current().nextInt(locations.size())));
             facilities.add(f);
         }
 
@@ -408,21 +424,6 @@ public class DatabaseSeeder implements ApplicationRunner {
         }
 
         return dispositorDutyEntries;
-    }
-
-    private List<Location> generateLocations(int length) {
-        List<Location> locations = new ArrayList<>();
-
-        for (int i = 0; i < length; i++) {
-            Location location = new Location();
-            location.setId(null);
-            location.setLatitude(ThreadLocalRandom.current().nextDouble(-90, 90));
-            location.setLongitude(ThreadLocalRandom.current().nextDouble(-180, 180));
-
-            locations.add(location);
-        }
-
-        return locations;
     }
 
     private List<EquipmentLog> generateEquipmentLog(int length) {
