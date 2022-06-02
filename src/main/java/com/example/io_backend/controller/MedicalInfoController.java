@@ -61,4 +61,14 @@ public class MedicalInfoController {
         return new ResponseEntity<>(medicalInfoService.updateAllergies(id, allergies),HttpStatus.OK);
     }
 
+    @DeleteMapping("/chronic/{id}")
+    public ResponseEntity<MedicalInfoDto> deleteChronicDisease(@PathVariable Long id) {
+        return  new ResponseEntity<>(medicalInfoService.deleteChronicDiseases(id),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/blood/{id}")
+    public ResponseEntity<MedicalInfoDto> deleteBloodType(@PathVariable Long id) {
+        return  new ResponseEntity<>(medicalInfoService.deleteBloodType(id),HttpStatus.OK);
+    }
+
 }

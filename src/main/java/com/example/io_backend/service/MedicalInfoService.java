@@ -7,14 +7,13 @@ import com.example.io_backend.dto.MedicalInfoDto;
 import com.example.io_backend.exception.NotFoundException;
 import com.example.io_backend.model.Allergy;
 import com.example.io_backend.model.MedicalInfo;
-import com.example.io_backend.model.enums.BloodType;
 import com.example.io_backend.repository.MedicalInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ public class MedicalInfoService {
 
     private final MedicalInfoRepository medicalInfoRepository;
     private final ModelMapper modelMapper;
+    private final AllergyService allergyService;
 
     public List<MedicalInfo> getMedicalInfo() {
         return medicalInfoRepository.findAll();
@@ -57,6 +57,12 @@ public class MedicalInfoService {
         medicalInfoRepository.save(medicalInfo);
         return modelMapper.map(medicalInfo,MedicalInfoDto.class);
     }
+    public MedicalInfoDto deleteBloodType(Long medicalInfoId) {
+        MedicalInfo medicalInfo = this.getMedicalInfoById(medicalInfoId);
+        medicalInfo.setBloodType(null);
+        medicalInfoRepository.save(medicalInfo);
+        return modelMapper.map(medicalInfo,MedicalInfoDto.class);
+    }
 
     public MedicalInfoDto updateChronicDiseases(Long medicalInfoId, ChronicDiseaseDto chronicDiseases) {
         MedicalInfo medicalInfo = this.getMedicalInfoById(medicalInfoId);
@@ -65,12 +71,31 @@ public class MedicalInfoService {
         return modelMapper.map(medicalInfo,MedicalInfoDto.class);
     }
 
-    public MedicalInfoDto updateAllergies(Long medicalInfoId, AllergiesDto... allergies) {
-        List<AllergiesDto> allergiesDtoToList = Arrays.asList(allergies);
+    public MedicalInfoDto deleteChronicDiseases(Long medicalInfoId) {
         MedicalInfo medicalInfo = this.getMedicalInfoById(medicalInfoId);
-        medicalInfo.setAllergies(Arrays.asList(modelMapper.map(allergiesDtoToList,Allergy[].class)));
+        medicalInfo.setChronicDiseases(null);
         medicalInfoRepository.save(medicalInfo);
         return modelMapper.map(medicalInfo,MedicalInfoDto.class);
     }
+
+    public MedicalInfoDto updateAllergies(Long medicalInfoId, AllergiesDto... allergies) {
+
+        List<AllergiesDto> allergiesToUpdate = Arrays.asList(allergies);
+        MedicalInfo medicalInfo = this.getMedicalInfoById(medicalInfoId);
+        List<Allergy> allergyList = medicalInfo.getAllergies();
+        for (int i = 0; i < allergiesToUpdate.size(); i++) {
+            AllergiesDto allergyTmp = allergiesToUpdate.get(i);
+            for (int j = 0; j < allergyList.size(); j++) {
+                if (allergyTmp.getId().equals(allergyList.get(j).getId())){
+                    allergyService.updateAllergy(allergyList.get(j).getId(),allergyTmp);
+                }
+            }
+        }
+        medicalInfoRepository.save(medicalInfo);
+        return modelMapper.map(medicalInfo,MedicalInfoDto.class);
+    }
+
+
+
 
 }
