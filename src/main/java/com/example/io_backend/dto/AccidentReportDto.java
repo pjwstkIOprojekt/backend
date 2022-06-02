@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Data
 public class AccidentReportDto {
-    private Long id;
+    private Integer id;
     private Short dangerRating;
     private Date date;
     private Boolean closed;
