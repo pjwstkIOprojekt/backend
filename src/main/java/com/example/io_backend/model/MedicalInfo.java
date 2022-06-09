@@ -33,4 +33,7 @@ public class MedicalInfo {
             inverseJoinColumns = @JoinColumn(name = "allergies_id"))
     private List<Allergy> allergies;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

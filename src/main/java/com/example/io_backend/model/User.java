@@ -6,7 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.UUID;
+
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -40,4 +41,6 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private MedicalInfo medicalInfo;
 
+    @OneToMany(mappedBy = "user_id")
+    private Set<AccidentReport> accidentReports;
 }
