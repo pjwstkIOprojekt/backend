@@ -13,9 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "equipment_log")
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class EquipmentLog {
     @Id
     @Column(name = "id", nullable = false)
