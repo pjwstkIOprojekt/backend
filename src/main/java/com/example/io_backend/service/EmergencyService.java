@@ -45,7 +45,7 @@ public class EmergencyService {
         report.setApproved(false);
         report.setDate(LocalDate.now());
         report.setReportSurvey(survey);
-        report.setId(null);
+        report.setAccidentReportId(null);
         report.setStaff(null);
         report.setUser(currentUser);
 
@@ -57,7 +57,7 @@ public class EmergencyService {
         response.setConscious(survey.getVictimConscious());
         response.setBloodType(survey.getBloodType());
         response.setDate(report.getDate());
-        response.setId(report.getId());
+        response.setId(report.getAccidentReportId());
         response.setUser(UserDto
                 .builder()
                         .firstName(currentUser.getFirstName())
@@ -81,7 +81,7 @@ public class EmergencyService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Staff loggedStaff = staffRepository.getByUser_Id(auth.getName());
 
-        AccidentReport report = accidentRepository.findById(id.longValue()).orElseThrow(() -> new NotFoundException("Cannot find accident report with that id"));
+        AccidentReport report = accidentRepository.findById(id).orElseThrow(() -> new NotFoundException("Cannot find accident report with that id"));
         report.setAmbulances(new HashSet<>(ambulances));
         report.setApproved(true);
         report.setDangerRating(request.getDangerRating());
@@ -105,7 +105,7 @@ public class EmergencyService {
 
         for (AccidentReport report : accidents) {
             EmergencyResponse response = new EmergencyResponse();
-            response.setId(report.getId());
+            response.setId(report.getAccidentReportId());
             response.setDescription(report.getReportSurvey().getDescription());
             response.setDate(report.getDate());
             response.setUser(UserDto.of(report.getUser()));

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -52,7 +51,7 @@ public class AccidentReportService {
     public void updateAccidentReport(AccidentReport accidentReport, Integer id) {
         var a = accidentReportRepository.findById(id).orElseThrow(()-> new NotFoundException("No record with that ID"));
 
-        a.setId(accidentReport.getId());
+        a.setAccidentReportId(accidentReport.getAccidentReportId());
         a.setAmbulances(accidentReport.getAmbulances());
         a.setClosed(accidentReport.getClosed());
         a.setReportSurvey(accidentReport.getReportSurvey());
