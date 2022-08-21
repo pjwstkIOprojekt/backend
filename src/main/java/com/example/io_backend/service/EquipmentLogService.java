@@ -28,7 +28,7 @@ public class EquipmentLogService {
 
     public void updateEquipmentLog(EquipmentLog equipmentLog, Integer id){
         var e = equipmentLogRepository.findById(id).orElseThrow(() -> new NotFoundException("No record with that Id"));
-        e.setId(equipmentLog.getId());
+        e.setEquipmentLogId(equipmentLog.getEquipmentLogId());
         e.setEquipment(equipmentLog.getEquipment());
         e.setAmbulance(equipmentLog.getAmbulance());
         e.setCurrentAmount(equipmentLog.getCurrentAmount());

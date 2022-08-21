@@ -32,9 +32,9 @@ public class Staff {
     @Enumerated(EnumType.ORDINAL)
     private StaffType staffType;
 
-    @OneToMany(mappedBy = "staff_id")
+    @OneToMany(mappedBy = "id")
     private Set<DispositorDutyEntry> dispositorDutyEntries;
 
-    @OneToMany(mappedBy = "staff_id")
+    @OneToMany(mappedBy = "accidentReportId")
     private Set<AccidentReport> accidentReports;
 }

@@ -44,6 +44,6 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private MedicalInfo medicalInfo;
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "accidentReportId")
     private Set<AccidentReport> accidentReports;
 }

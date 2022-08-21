@@ -44,13 +44,13 @@ public class Ambulance {
     @Column(name = "plates")
     private String plates;
 
-    @OneToMany(mappedBy = "ambulance_id")
+    @OneToMany(mappedBy = "equipmentLogId")
     private Set<EquipmentLog> equipmentLogs;
 
-    @OneToMany(mappedBy = "ambulance_id")
+    @OneToMany(mappedBy = "accidentReportId")
     private Set<AccidentReport> accidentReports;
 
-    @OneToMany(mappedBy = "ambulance_id")
+    @OneToMany(mappedBy = "availableId")
     private Set<AmbulanceAvailability> ambulanceAvailabilities;
 
     @Override

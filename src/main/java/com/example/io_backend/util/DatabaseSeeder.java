@@ -321,7 +321,7 @@ public class DatabaseSeeder implements ApplicationRunner {
         for (int i = 0; i < length; i++) {
             AmbulanceAvailability ambulanceAvailability = new AmbulanceAvailability();
             ambulanceAvailability.setAmbulance(ambulances.get(ThreadLocalRandom.current().nextInt(ambulances.size())));
-            ambulanceAvailability.setId(null);
+            ambulanceAvailability.setAvailableId(null);
             ambulanceAvailability.setAvailabilityType(EnumUtils.randomValue(AvailabilityType.class));
             ambulanceAvailability.setDetails("lorem ipsum " + i);
             ambulanceAvailability.setDateStart(LocalDate.now());
@@ -359,7 +359,7 @@ public class DatabaseSeeder implements ApplicationRunner {
         for (int i = 0; i < length; i++) {
             Double staring = ThreadLocalRandom.current().nextDouble(1,51);
             EquipmentLog e = new EquipmentLog();
-            e.setId(null);
+            e.setEquipmentLogId(null);
             e.setDateStart(LocalDate.now());
             e.setDateEnd(LocalDate.now());
             e.setStartingAmount(staring);
