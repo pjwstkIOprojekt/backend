@@ -45,8 +45,8 @@ public class DatabaseSeeder implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        seedUsers();
       if (args.getNonOptionArgs().contains("seed")) {
+          seedUsers();
           seedDatabase();
       } else log.info("Database seeding not enabled");
     }
