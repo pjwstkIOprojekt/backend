@@ -163,7 +163,7 @@ public class AmbulanceService {
     }
 
     private AmbulanceResponse mapToResponse(Ambulance a) {
-        var availability = availabilityRepository.findByAmbulanceId(a.getAmbulanceId()).orElse(null);
+        var availability = availabilityRepository.findByAmbulance_AmbulanceId(a.getAmbulanceId()).orElse(null);
 
         return AmbulanceResponse
                 .builder()

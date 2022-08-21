@@ -30,6 +30,6 @@ public class Equipment {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "equipment_id")
+    @OneToMany(mappedBy = "equipmentLogId")
     private Set<EquipmentLog> equipmentLog;
 }

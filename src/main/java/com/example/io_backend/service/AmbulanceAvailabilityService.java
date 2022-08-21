@@ -29,7 +29,7 @@ public class AmbulanceAvailabilityService {
     public void updateAmbulanceAvailability(AmbulanceAvailability ambulanceAvailability, Integer id) {
         var a = ambulanceAvailabilityRepository.findById(id).orElseThrow(()-> new NotFoundException("No record with that ID"));
 
-        a.setId(ambulanceAvailability.getId());
+        a.setAvailableId(ambulanceAvailability.getAvailableId());
         a.setAmbulance(ambulanceAvailability.getAmbulance());
         a.setAvailabilityType(ambulanceAvailability.getAvailabilityType());
         a.setDateStart(ambulanceAvailability.getDateStart());
