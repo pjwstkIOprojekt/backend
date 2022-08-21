@@ -69,7 +69,6 @@ services:
       - "8080:8080"
     depends_on:
       - database
-      - keycloak
     links:
       - database
     restart: on-failure

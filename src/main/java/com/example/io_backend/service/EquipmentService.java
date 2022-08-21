@@ -28,7 +28,7 @@ public class EquipmentService {
         return equipmentRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
-    public EquipmentResponse getEquipmentById(Long id) {
+    public EquipmentResponse getEquipmentById(Integer id) {
         return equipmentRepository.findById(id).map(this::mapToResponse).orElseThrow(NotFoundException::new);
     }
     public List<EquipmentResponse> getEquipmentByName(String name) {
@@ -51,7 +51,7 @@ public class EquipmentService {
         return equipment.stream().map(this::mapToResponse).toList();
     }
 
-    public EquipmentResponse updateEquipment(EquipmentDto equipment, Long id){
+    public EquipmentResponse updateEquipment(EquipmentDto equipment, Integer id){
         Equipment eq = equipmentRepository.findById(id).orElseThrow(NotFoundException::new);
         eq.setName(equipment.getName());
 
@@ -59,7 +59,7 @@ public class EquipmentService {
         return mapToResponse(eq);
     }
 
-    public void deleteEquipment(Long id) {
+    public void deleteEquipment(Integer id) {
         Equipment eq = equipmentRepository.findById(id).orElseThrow(NotFoundException::new);
         equipmentRepository.delete(eq);
     }
