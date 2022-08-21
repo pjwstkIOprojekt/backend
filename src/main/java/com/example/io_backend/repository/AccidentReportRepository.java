@@ -9,5 +9,5 @@ import java.util.List;
 public interface AccidentReportRepository extends JpaRepository<AccidentReport, Integer> {
     List<AccidentReport> getAccidentReportByApprovedIsFalse();
     List<AccidentReport> getAccidentReportByApprovedIsTrue();
-    long countByStaff(Staff staff);
+    Integer countByStaff(Staff staff);
 }

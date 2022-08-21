@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,12 +32,12 @@ public class AccidentReportService {
     }
 
     public AccidentReport addAccidentReport(AccidentReport accidentReport){
-        AtomicReference<Staff> least = null;
-        AtomicLong count = new AtomicLong(Long.MAX_VALUE);
+        AtomicReference<Staff> least = new AtomicReference<>();
+        AtomicInteger count = new AtomicInteger(Integer.MAX_VALUE);
         staffRepository.getAllByStaffType(StaffType.DISPOSITOR).stream()
                 .filter(it -> dispositorDutyEntryRepository.getFirstByDutyEndIsNotNullAndStaffEquals(it) != null)
                 .forEach(it -> {
-                    long current = accidentReportRepository.countByStaff(it);
+                    Integer current = accidentReportRepository.countByStaff(it);
                     if (current < count.get()) {
                         count.set(current);
                         least.set(it);

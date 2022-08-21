@@ -52,7 +52,7 @@ public class AmbulanceController {
             @NonNull
             @PathVariable Integer id,
             @NonNull
-            @PathVariable Long eqid) {
+            @PathVariable Integer eqid) {
         return ResponseEntity.ok(ambulanceService.assignEquipment(id, eqid));
     }
 

@@ -27,7 +27,7 @@ public class UserMedicalInfoDto {
     @Data
     public static class AmbulanceAvailabilityDto {
 
-        private Long id;
+        private Integer id;
         private Ambulance ambulance;
         private AvailabilityType availabilityType;
         private Date dateStart;

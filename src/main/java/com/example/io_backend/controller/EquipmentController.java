@@ -34,8 +34,7 @@ public class EquipmentController {
     }
 
     @PutMapping("/{id}")
-    public EquipmentResponse update(@Valid @RequestBody EquipmentDto equipment, @PathVariable Long id){
-    public EquipmentResponse update(@RequestBody EquipmentDto equipment, @PathVariable Integer id){
+    public EquipmentResponse update(@Valid @RequestBody EquipmentDto equipment, @PathVariable Integer id){
         return equipmentService.updateEquipment(equipment,id);
     }
 
