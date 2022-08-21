@@ -1,4 +1,4 @@
-package com.example.io_backend.dto;
+package com.example.io_backend.model.dto;
 
 import com.example.io_backend.model.MedicalInfo;
 import com.example.io_backend.model.User;

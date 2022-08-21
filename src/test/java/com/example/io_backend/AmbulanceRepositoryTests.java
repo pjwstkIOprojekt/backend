@@ -24,7 +24,7 @@ public class AmbulanceRepositoryTests {
     public void findAllByIdLessThan() {
         for(int i = 0; i < 100; i += 10) {
             for(var it : ambulanceRepository.getAllByIdLessThan(i)) {
-                assertTrue(it.getId() < i, "Id greater than requested");
+                assertTrue(it.getAmbulanceId() < i, "Id greater than requested");
             }
         }
     }
@@ -72,7 +72,7 @@ public class AmbulanceRepositoryTests {
         Ambulance ambulance = new Ambulance();
         ambulance.setAmbulanceKind(AmbulanceKind.N);
         ambulance.setAmbulanceType(AmbulanceType.A);
-        ambulance.setId(null);
+        ambulance.setAmbulanceId(null);
         ambulance.setPeopleCapacity(5);
         ambulance.setPlates(null);
         ambulance.setFuelCapacity(1);

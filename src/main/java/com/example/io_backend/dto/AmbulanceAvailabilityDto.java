@@ -4,7 +4,7 @@ import com.example.io_backend.model.Ambulance;
 import com.example.io_backend.model.enums.AvailabilityType;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class AmbulanceAvailabilityDto {
@@ -12,8 +12,8 @@ public class AmbulanceAvailabilityDto {
     private Integer id;
     private Ambulance ambulance;
     private AvailabilityType availabilityType;
-    private LocalDate dateStart;
-    private LocalDate dateEnd;
+    private Date dateStart;
+    private Date dateEnd;
     private String details;
 
 

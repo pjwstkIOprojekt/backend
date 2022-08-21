@@ -179,7 +179,7 @@ public class DatabaseSeeder implements ApplicationRunner {
             Ambulance ambulance = new Ambulance();
             ambulance.setAmbulanceKind(EnumUtils.randomValue(AmbulanceKind.class));
             ambulance.setAmbulanceType(EnumUtils.randomValue(AmbulanceType.class));
-            ambulance.setId(null);
+            ambulance.setAmbulanceId(null);
             ambulance.setPeopleCapacity(5);
             ambulance.setPlates(numberPlates.get(ThreadLocalRandom.current().nextInt(numberPlates.size())));
             ambulance.setFuelCapacity(400000);
@@ -280,7 +280,7 @@ public class DatabaseSeeder implements ApplicationRunner {
 
         for (int i = 0; i < length; i++) {
             AccidentReport a = new AccidentReport();
-            a.setId(null);
+            a.setAccidentReportId(null);
             a.setAmbulances(
                     ambulances.stream()
                             .limit(ThreadLocalRandom.current().nextInt(ambulances.size() - (entitiesToGenerate / 2)))
