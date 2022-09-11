@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface AmbulanceAvailabilityRepository extends JpaRepository<AmbulanceAvailability, Integer> {
-    Optional<AmbulanceAvailability> findByAmbulanceId(Integer id);
+    Optional<AmbulanceAvailability> findByAmbulance_AmbulanceId(Integer id);
 }

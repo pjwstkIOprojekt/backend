@@ -9,7 +9,6 @@ import com.example.io_backend.model.dto.AmbulanceAvailabilityDto;
 import com.example.io_backend.model.dto.AmbulanceDto;
 import com.example.io_backend.model.dto.response.AmbulanceResponse;
 import com.example.io_backend.model.dto.response.EquipmentLogResponse;
-import com.example.io_backend.model.dto.response.EquipmentResponse;
 import com.example.io_backend.model.enums.AmbulanceKind;
 import com.example.io_backend.model.enums.AmbulanceType;
 import com.example.io_backend.model.enums.AvailabilityType;
@@ -138,7 +137,7 @@ public class AmbulanceService {
 
     public boolean isAvailable(Integer id) {
         List<Ambulance> ambulances = getAvailableAmbulances();
-        Optional<Integer> availableId = ambulances.stream().map(Ambulance::getId).filter(x -> x.equals(id)).findFirst();
+        Optional<Integer> availableId = ambulances.stream().map(Ambulance::getAmbulanceId).filter(x -> x.equals(id)).findFirst();
 
         return availableId.isPresent();
     }
@@ -164,7 +163,7 @@ public class AmbulanceService {
     }
 
     private AmbulanceResponse mapToResponse(Ambulance a) {
-        var availability = availabilityRepository.findByAmbulanceId(a.getId()).orElse(null);
+        var availability = availabilityRepository.findByAmbulance_AmbulanceId(a.getAmbulanceId()).orElse(null);
 
         return AmbulanceResponse
                 .builder()
@@ -182,7 +181,7 @@ public class AmbulanceService {
                 .builder()
                 .ambulanceKind(dto.getKind())
                 .ambulanceType(dto.getType())
-                .id(null)
+                .ambulanceId(null)
                 .peopleCapacity(dto.getNumberOfSeats())
                 .fuelCapacity(dto.getFuelTankCapacity())
                 .plates(dto.getLicensePlates())

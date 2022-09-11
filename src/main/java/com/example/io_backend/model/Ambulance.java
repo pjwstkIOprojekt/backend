@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,8 +23,8 @@ public class Ambulance {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "ambulance_id")
+    private Integer ambulanceId;
 
     @Column(name = "ambulance_type")
     private AmbulanceType ambulanceType;
@@ -45,13 +44,13 @@ public class Ambulance {
     @Column(name = "plates")
     private String plates;
 
-    @OneToMany(mappedBy = "ambulance_id")
+    @OneToMany(mappedBy = "equipmentLogId")
     private Set<EquipmentLog> equipmentLogs;
 
-    @OneToMany(mappedBy = "ambulance_id")
+    @OneToMany(mappedBy = "accidentReportId")
     private Set<AccidentReport> accidentReports;
 
-    @OneToMany(mappedBy = "ambulance_id")
+    @OneToMany(mappedBy = "availableId")
     private Set<AmbulanceAvailability> ambulanceAvailabilities;
 
     @Override
@@ -59,7 +58,7 @@ public class Ambulance {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Ambulance ambulance = (Ambulance) o;
-        return id != null && Objects.equals(id, ambulance.id);
+        return ambulanceId != null && Objects.equals(ambulanceId, ambulance.ambulanceId);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class EquipmentLog {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue
-    private Integer id;
+    private Integer equipmentLogId;
 
     @ManyToOne
     @JoinColumn(name = "equipment_id")

@@ -3,6 +3,7 @@ package com.example.io_backend.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,6 +15,13 @@ import java.util.Set;
 @Table(name = "equipment")
 @Entity
 public class Equipment {
+
+    public Equipment(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+        this.equipmentLog = new HashSet<>();
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue
@@ -22,6 +30,6 @@ public class Equipment {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "equipment_id")
+    @OneToMany(mappedBy = "equipmentLogId")
     private Set<EquipmentLog> equipmentLog;
 }

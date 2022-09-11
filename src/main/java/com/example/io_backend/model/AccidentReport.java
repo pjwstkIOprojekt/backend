@@ -14,9 +14,9 @@ import java.util.Set;
 @Entity
 public class AccidentReport {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ambulance_report_id", nullable = false)
     @GeneratedValue
-    private Integer id;
+    private Integer accidentReportId;
 
     @Column(name = "danger_rating")
     private Short dangerRating;

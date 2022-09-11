@@ -45,8 +45,8 @@ public class DatabaseSeeder implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        seedUsers();
       if (args.getNonOptionArgs().contains("seed")) {
+          seedUsers();
           seedDatabase();
       } else log.info("Database seeding not enabled");
     }
@@ -179,7 +179,7 @@ public class DatabaseSeeder implements ApplicationRunner {
             Ambulance ambulance = new Ambulance();
             ambulance.setAmbulanceKind(EnumUtils.randomValue(AmbulanceKind.class));
             ambulance.setAmbulanceType(EnumUtils.randomValue(AmbulanceType.class));
-            ambulance.setId(null);
+            ambulance.setAmbulanceId(null);
             ambulance.setPeopleCapacity(5);
             ambulance.setPlates(numberPlates.get(ThreadLocalRandom.current().nextInt(numberPlates.size())));
             ambulance.setFuelCapacity(400000);
@@ -280,7 +280,7 @@ public class DatabaseSeeder implements ApplicationRunner {
 
         for (int i = 0; i < length; i++) {
             AccidentReport a = new AccidentReport();
-            a.setId(null);
+            a.setAccidentReportId(null);
             a.setAmbulances(
                     ambulances.stream()
                             .limit(ThreadLocalRandom.current().nextInt(ambulances.size() - (entitiesToGenerate / 2)))
@@ -321,7 +321,7 @@ public class DatabaseSeeder implements ApplicationRunner {
         for (int i = 0; i < length; i++) {
             AmbulanceAvailability ambulanceAvailability = new AmbulanceAvailability();
             ambulanceAvailability.setAmbulance(ambulances.get(ThreadLocalRandom.current().nextInt(ambulances.size())));
-            ambulanceAvailability.setId(null);
+            ambulanceAvailability.setAvailableId(null);
             ambulanceAvailability.setAvailabilityType(EnumUtils.randomValue(AvailabilityType.class));
             ambulanceAvailability.setDetails("lorem ipsum " + i);
             ambulanceAvailability.setDateStart(LocalDate.now());
@@ -359,7 +359,7 @@ public class DatabaseSeeder implements ApplicationRunner {
         for (int i = 0; i < length; i++) {
             Double staring = ThreadLocalRandom.current().nextDouble(1,51);
             EquipmentLog e = new EquipmentLog();
-            e.setId(null);
+            e.setEquipmentLogId(null);
             e.setDateStart(LocalDate.now());
             e.setDateEnd(LocalDate.now());
             e.setStartingAmount(staring);

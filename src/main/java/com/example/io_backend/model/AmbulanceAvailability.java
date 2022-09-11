@@ -17,7 +17,7 @@ public class AmbulanceAvailability {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue
-    private Integer id;
+    private Integer availableId;
 
     @ManyToOne
     @JoinColumn(name = "ambulance_id")
