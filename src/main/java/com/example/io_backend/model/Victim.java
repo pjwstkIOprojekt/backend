@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Entity
 public class Victim {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "victim_id", nullable = false)
     @GeneratedValue
     private Integer id;
 
@@ -21,14 +22,10 @@ public class Victim {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "document_name")
-    private String documentName;
-
-    @Column(name = "document_id")
-    private String documentId;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "medical_info_id")
     private MedicalInfo medicalInfo;
 
+    @ManyToMany(mappedBy = "victims")
+    private Set<ReportSurvey> reportSurveys;
 }

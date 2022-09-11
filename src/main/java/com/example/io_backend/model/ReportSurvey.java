@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 public class ReportSurvey {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "report_survey_id", nullable = false)
     @GeneratedValue
     private Integer id;
 
@@ -38,4 +39,10 @@ public class ReportSurvey {
     @Column(name = "blood_type")
     private BloodType bloodType;
 
+    @ManyToMany
+    @JoinTable(
+            name = "victim",
+            joinColumns = @JoinColumn(name = "victim_id"),
+            inverseJoinColumns = @JoinColumn(name = "report_survey_id"))
+    private Set<Victim> victims;
 }

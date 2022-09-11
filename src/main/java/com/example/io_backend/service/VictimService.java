@@ -29,11 +29,10 @@ public class VictimService {
     public void updateVictim(Victim victim, Integer id) {
         var v = victimRepository.findById(id).orElseThrow(() -> new NotFoundException("Victim Not Found"));
         v.setId(victim.getId());
-        v.setDocumentId(victim.getDocumentId());
-        v.setDocumentName(victim.getDocumentName());
         v.setFirstName(victim.getFirstName());
         v.setLastName(victim.getLastName());
         v.setMedicalInfo(victim.getMedicalInfo());
+        v.setReportSurveys(victim.getReportSurveys());
 
         victimRepository.save(v);
     }

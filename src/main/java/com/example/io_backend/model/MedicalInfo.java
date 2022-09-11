@@ -1,6 +1,7 @@
 package com.example.io_backend.model;
 
 import com.example.io_backend.model.enums.BloodType;
+import io.micrometer.core.lang.Nullable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,6 +30,11 @@ public class MedicalInfo {
     private String allergies;
 
     @OneToOne
+    @Nullable
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne(mappedBy = "medicalInfo")
+    @Nullable
+    private Victim victim;
 }

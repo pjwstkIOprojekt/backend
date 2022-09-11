@@ -36,7 +36,8 @@ public class MedicalInfoService {
         m.setAllergies(medicalInfo.getAllergies());
         m.setBloodType(medicalInfo.getBloodType());
         m.setChronicDiseases(medicalInfo.getChronicDiseases());
-
+        m.setUser(medicalInfo.getUser());
+        m.setVictim(medicalInfo.getVictim());
         medicalInfoRepository.save(m);
     }
 
