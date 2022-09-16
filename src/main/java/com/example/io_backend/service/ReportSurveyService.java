@@ -34,6 +34,7 @@ public class ReportSurveyService {
         r.setVictimBreathing(reportSurvey.getVictimBreathing());
         r.setVictimConscious(reportSurvey.getVictimConscious());
         r.setDescription(reportSurvey.getDescription());
+        r.setVictims(reportSurvey.getVictims());
 
         reportSurveyRepository.save(r);
     }

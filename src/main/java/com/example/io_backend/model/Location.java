@@ -16,9 +16,9 @@ public class Location {
     private Integer id;
 
     @Column(name = "longitude")
-    private String longitude;
+    private Double longitude;
 
     @Column(name = "latitude")
-    private String latitude;
+    private Double latitude;
 
 }
