@@ -17,7 +17,7 @@ public class EnumController {
 	@GetMapping("/emergency_type")
 	public List<String> getEmergencyTypeList(){
 		return Stream.of(EmergencyType.values())
-				.map(Enum::name)
+				.map(EmergencyType::name)
 				.collect(Collectors.toList());
 	}
 }
