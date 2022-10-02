@@ -1,8 +1,10 @@
 package com.example.io_backend.model;
 
 import com.example.io_backend.model.enums.BloodType;
+import com.example.io_backend.model.enums.EmergencyType;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,13 +33,21 @@ public class ReportSurvey {
     @Column(name = "date")
     private LocalDate date;
 
-    @ElementCollection
-    @Column(name = "file_url")
-    private List<String> fileUrl;
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    @Column(name = "location")
+    private Location location;
 
-    @Enumerated
-    @Column(name = "blood_type")
-    private BloodType bloodType;
+    @Column(name = "band")
+    @Nullable
+    private String bandCode;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private EmergencyType emergencyType;
+
+    @Column(name = "victim_count")
+    private int victimCount;
 
     @ManyToMany
     @JoinTable(
@@ -45,4 +55,8 @@ public class ReportSurvey {
             joinColumns = @JoinColumn(name = "victim_id"),
             inverseJoinColumns = @JoinColumn(name = "report_survey_id"))
     private Set<Victim> victims;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
