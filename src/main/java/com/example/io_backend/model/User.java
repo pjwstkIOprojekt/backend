@@ -46,4 +46,7 @@ public class User {
 
     @OneToMany(mappedBy = "accidentReportId")
     private Set<AccidentReport> accidentReports;
+
+    @OneToMany(mappedBy = "user")
+    private Set<ReportSurvey> reportSurveys;
 }

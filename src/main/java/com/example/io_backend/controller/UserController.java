@@ -1,12 +1,14 @@
 package com.example.io_backend.controller;
 
 import com.example.io_backend.model.MedicalInfo;
+import com.example.io_backend.model.ReportSurvey;
 import com.example.io_backend.model.User;
 import com.example.io_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController()
 @RequestMapping(path = "/user")
@@ -23,6 +25,9 @@ public class UserController {
     public User getById(@PathVariable String id) {
         return userService.getUserById(id);
     }
+
+    @GetMapping("/survey/{id}")
+    public Set<ReportSurvey> getAllReportSurveysByUser(@PathVariable String id){ return userService.getAllReportSurveysByUser(id);}
 
     @PutMapping("/{id}")
     public void update(@RequestBody User user, @PathVariable String id) {

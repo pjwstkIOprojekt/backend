@@ -1,5 +1,6 @@
 package com.example.io_backend.service;
 
+import com.example.io_backend.model.ReportSurvey;
 import com.example.io_backend.model.dto.UserMedicalInfoDto;
 import com.example.io_backend.exception.NotFoundException;
 import com.example.io_backend.model.MedicalInfo;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -27,6 +29,10 @@ public class UserService {
 
     public User getUserById(String userId) {
         return userRepository.findById(userId).orElseThrow(() -> new NotFoundException("No record with that id"));
+    }
+
+    public Set<ReportSurvey> getAllReportSurveysByUser (String id){
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("No record with that id")).getReportSurveys();
     }
 
     public void updateUser(User user, String userId) {
